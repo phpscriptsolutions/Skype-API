@@ -58,11 +58,11 @@ class DevelClient
         $this->github = new Github();
 
         (new Timer(10))
-            ->callback(function(){ $this->checkGithub(); })
+            ->callback(function(){ /* $this->checkGithub(); */ })
             ->join($this->skype);
 
         $this->skype->events->onMessage(function(Message $msg){
-            if (strtolower(trim($msg->body)) == 'github:issues') {
+            if ($msg->like('github:issues')) {
                 $m = '';
                 foreach ($this->issues() as $issue) {
                     $m .= 'New issue: "' . $issue['title'] . '" ' . $issue['url'] . "\n\n";
@@ -79,18 +79,6 @@ class DevelClient
         return $this->github
             ->api('issue')
             ->all('codersclub', 'forum');
-    }
-
-    public function checkGithub()
-    {
-        $repos = $this->github
-            ->api('issue')
-            ->all('codersclub', 'forum');
-
-        foreach ($repos as $repo) {
-            #$message = 'New issue: "' . $repo['title'] . '" ' . $repo['url'];
-            #$this->chat->write($message);
-        }
     }
 }
 new DevelClient();

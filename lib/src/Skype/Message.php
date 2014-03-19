@@ -36,7 +36,10 @@ class Message
         $this->body         = Skype::encode($message->Body);
     }
 
-    #public function lik
+    public function like($msg)
+    {
+        return mb_strtolower(trim($this->body)) == mb_strtolower(trim($msg));
+    }
 
     public function answer($message)
     {
