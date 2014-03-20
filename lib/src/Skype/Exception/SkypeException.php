@@ -12,11 +12,7 @@ namespace Skype\Exception;
 
 use Exception;
 
-/**
- * Class EmptyMethodException
- * @package Skype\Exception
- */
-class EmptyMethodException extends Exception
+class SkypeException extends Exception
 {
 
 }

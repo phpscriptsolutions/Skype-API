@@ -12,18 +12,38 @@ namespace Skype\Helper;
 
 use Skype\TSkype\Proxy;
 
-class ProxyInstance
+/**
+ * Class ProxyInstance
+ * @package Skype\Helper
+ */
+final class ProxyInstance
 {
     use Proxy;
 
+    /**
+     * COM variable
+     * @var
+     */
     protected $instance;
+
+    /**
+     * Variable name
+     * @var string
+     */
     protected $proxy = 'instance';
 
+    /**
+     * @param $instance
+     */
     public function __construct($instance)
     {
         $this->instance = $instance;
     }
 
+    /**
+     * Return clear COM variable
+     * @return mixed
+     */
     public function proxy()
     {
         return $this->instance;

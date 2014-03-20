@@ -15,15 +15,38 @@ use Skype\TSkype\Proxy;
 use Skype\Events;
 use COM;
 
+/**
+ * Class Client
+ * @package Skype
+ */
 class Client
 {
     use Singleton;
     use Proxy;
 
+    /**
+     * Skype COM instance
+     * @var
+     */
     protected $connection;
+
+    /**
+     * COM variable name
+     * @var string
+     */
     protected $proxy = 'connection';
+
+    /**
+     * Skype events instance
+     * @var
+     */
     public $events;
 
+    /**
+     * Singleton constructor
+     * @param bool $minimized
+     * @param bool $splash
+     */
     public function initialize($minimized = true, $splash = false)
     {
         $this->connection   = new COM('Skype4COM.Skype');
@@ -37,13 +60,17 @@ class Client
         com_message_pump(1000);
     }
 
+    /**
+     * Default skype attach method
+     */
     public function attach()
     {
         $this->connection->attach(5, false);
     }
 
-
-
+    /**
+     * Run skype client
+     */
     public function join()
     {
         while (!$this->events->terminated) {
@@ -53,7 +80,15 @@ class Client
         }
     }
 
+    /**
+     * Attach status timeout
+     * @var
+     */
     private $_awaitMinute;
+
+    /**
+     * Check skype attach status
+     */
     private function checkAttach()
     {
         if (date('H:i') != $this->_awaitMinute) {

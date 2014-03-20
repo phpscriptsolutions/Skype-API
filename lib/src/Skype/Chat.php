@@ -14,12 +14,31 @@ use Skype\TSkype\Proxy;
 use Skype\Message;
 use Skype;
 
+/**
+ * Class Chat
+ * @package Skype
+ */
 class Chat
 {
     use Proxy;
+
+    /**
+     * Proxy name
+     * @var string
+     */
     protected $proxy = 'chat';
+
+    /**
+     * COM object of current skype chat
+     * @var
+     */
     protected $chat;
 
+    /**
+     * Return chat by chat name
+     * @param $name
+     * @return Chat
+     */
     public static function getByName($name)
     {
         return new self(
@@ -27,6 +46,11 @@ class Chat
         );
     }
 
+    /**
+     * Each chat
+     * @param callable $cb
+     * @param string $type
+     */
     public static function each(callable $cb, $type = 'recent')
     {
         $name = $type . 'Chats';
@@ -36,16 +60,27 @@ class Chat
         }
     }
 
+    /**
+     * @param $chat
+     */
     public function __construct($chat)
     {
         $this->chat = $chat;
     }
 
-    public function write($message)
+    /**
+     * Send message inside current chat
+     * @param $message
+     */
+    public function send($message)
     {
         $this->sendMessage($message);
     }
 
+    /**
+     * Income message event for current chat
+     * @param callable $cb
+     */
     public function onMessage(callable $cb)
     {
         Skype::client()->events->onMessage(function(Message $message) use ($cb){
@@ -55,6 +90,10 @@ class Chat
         });
     }
 
+    /**
+     * Send message event for current chat
+     * @param callable $cb
+     */
     public function onSend(callable $cb)
     {
         Skype::client()->events->onSend(function(Message $message) use ($cb){
@@ -64,6 +103,10 @@ class Chat
         });
     }
 
+    /**
+     * Any new message inside current chat
+     * @param callable $cb
+     */
     public function onAnyMessage(callable $cb)
     {
         Skype::client()->events->onAnyMessage(function(Message $message) use ($cb){

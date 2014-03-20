@@ -12,23 +12,53 @@ namespace Skype\Helper;
 
 use Skype\Client;
 
+/**
+ * Class Timer
+ * @package Skype\Helper
+ */
 class Timer
 {
+    /**
+     * Last callback call timestamp
+     * @var int
+     */
     private $_lastCheck = 0;
+
+    /**
+     * Callback call interval
+     * @var int
+     */
     private $_interval;
+
+    /**
+     * All callbacks
+     * @var array
+     */
     private $_callbacks = [];
 
+    /**
+     * @param int $interval
+     */
     public function __construct($interval = 1)
     {
         $this->_interval = $interval;
     }
 
+    /**
+     * Add new callback
+     * @param callable $cb
+     * @return $this
+     */
     public function callback(callable $cb)
     {
         $this->_callbacks[] = $cb;
         return $this;
     }
 
+    /**
+     * Try call all callbacks
+     * @return $this
+     */
     public function call()
     {
         if ($this->_lastCheck + $this->_interval < time()) {
@@ -38,6 +68,10 @@ class Timer
         return $this;
     }
 
+    /**
+     * Subscribe on interview Skype\Client event
+     * @param Client $client
+     */
     public function join(Client $client)
     {
         $client->events->interview(function(){
