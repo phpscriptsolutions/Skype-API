@@ -114,7 +114,7 @@ try {
      * EXCEPTION
      */
     file_put_contents(
-        __DIR__ . '/logs/' . date('Y-m-d H.i') . '.log',
+        __DIR__ . '/logs/' . date('Y-m-d H') . '.log',
         'Exception: ' . $e->getMessage() . "\n" .
         'Trace: ' . "\n" . $e->getTraceAsString() . "\n\n" .
         str_repeat('=', 80) . "\n"
