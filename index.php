@@ -48,10 +48,6 @@ class DevelClient
     protected $commands = [];
 
 
-    public function commands()
-    {
-
-    }
 
     public function __construct()
     {
@@ -62,8 +58,12 @@ class DevelClient
         $this->chat   = Chat::getByName(self::CHAT_ID);
         #$this->chat   = Chat::getByName(self::CHAT_ECHO);
 
-        (new Timer(10))
-            ->callback(function(){})
+        (new Timer(100))
+            ->callback(function(){
+                foreach ($this->commands as $c) {
+                    $c->check();
+                }
+            })
             ->join($this->skype);
 
 
@@ -88,7 +88,13 @@ class DevelClient
         $this->skype->join();
     }
 }
-new DevelClient();
+
+try {
+    new DevelClient();
+} catch(\Exception $e) {
+    Chat::getByName(DevelClient::CHAT_ID)
+        ->send('Devel bot exception: ' . $e->getMessage());
+}
 
 
 
