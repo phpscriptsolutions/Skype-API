@@ -61,7 +61,7 @@ class DevelClient
         $this->chat   = Chat::getByName(self::CHAT_ID);
         #$this->chat   = Chat::getByName(self::CHAT_ECHO);
 
-        (new Timer(120))
+        (new Timer(240))
             ->callback(function(){
                 foreach ($this->commands as $c) {
                     $c->check();
