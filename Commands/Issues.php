@@ -66,7 +66,7 @@ class Issues extends AbstractCommand
 
         foreach ($issues as $iss) {
             if (!isset($this->issues[$iss['id']])) {
-                Stdout::write('Найден новый issue');
+                Stdout::write('Find new issue');
                 Chat::getByName(\DevelClient::CHAT_ID)
                     ->send(
                         'Открыт новый вопрос по форуму: ' . "\n" .

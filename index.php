@@ -60,7 +60,7 @@ class DevelClient
         $this->chat   = Chat::getByName(self::CHAT_ID);
         #$this->chat   = Chat::getByName(self::CHAT_ECHO);
 
-        (new Timer(100))
+        (new Timer(1000))
             ->callback(function(){
                 foreach ($this->commands as $c) {
                     $c->check();
@@ -76,7 +76,7 @@ class DevelClient
              */
             if ($msg->like('help')) {
                 Stdout::write(
-                    'Пользователь ' . $msg->getUser()->handle . ' сделал запрос на help'
+                    'User ' . $msg->getUser()->handle . ' made a new help request'
                 );
 
                 $result = 'Доступные команды:' . "\n";
@@ -85,6 +85,7 @@ class DevelClient
                 }
                 $msg->getUser()->send($result);
 
+
             /**
              * COMMANDS
              */
@@ -92,7 +93,7 @@ class DevelClient
                 foreach ($this->commands as $c) {
                     if ($msg->like($c->command)) {
                         Stdout::write(
-                            'Пользователь ' . $msg->getUser()->handle . ' сделал запрос на ' . $c->command
+                            'User ' . $msg->getUser()->handle . ' made a new ' . $c->command . ' request'
                         );
                         $c->request($msg->getUser());
                     }
