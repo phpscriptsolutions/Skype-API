@@ -16,7 +16,7 @@ use Skype\Chat;
 use Skype\Stdout;
 use Commands\AbstractCommand;
 
-class Issues extends AbstractCommand
+class GitHubIssues extends AbstractCommand
 {
     public $about   = 'Открытые вопросы по форуму на Github';
     public $command = 'github:issues';

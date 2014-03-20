@@ -52,7 +52,7 @@ class DevelClient
 
     public function __construct()
     {
-        $this->commands[] = new Commands\Issues();
+        $this->commands[] = new Commands\GitHubIssues();
 
         Stdout::write('Initialize skype devel client');
 
