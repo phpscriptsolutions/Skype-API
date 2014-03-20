@@ -115,7 +115,7 @@ try {
      */
     Stdout::write(
         'Exception: ' . $e->getMessage() . "\n" .
-        'Trace: ' . "\n" . print_r($e->getTrace(), 1)
+        'Trace: ' . "\n" . print_r($e->getTraceAsString(), 1)
     );
 }
 
