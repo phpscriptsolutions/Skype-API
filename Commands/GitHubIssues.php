@@ -66,7 +66,7 @@ class GitHubIssues extends AbstractCommand
 
         foreach ($issues as $iss) {
             if (!isset($this->issues[$iss['id']])) {
-                Stdout::write('Find new issue');
+                Stdout::write('Find new Github issue: ' . $iss['html_url']);
                 Chat::getByName(\DevelClient::CHAT_ID)
                     ->send(
                         'Открыт новый вопрос по форуму: ' . "\n" .
