@@ -13,6 +13,7 @@ use Skype\User;
 use Github\Client as Github;
 use Skype;
 use Skype\Chat;
+use Skype\Stdout;
 use Commands\AbstractCommand;
 
 class Issues extends AbstractCommand
@@ -65,6 +66,7 @@ class Issues extends AbstractCommand
 
         foreach ($issues as $iss) {
             if (!isset($this->issues[$iss['id']])) {
+                Stdout::write('Найден новый issue');
                 Chat::getByName(\DevelClient::CHAT_ID)
                     ->send(
                         'Открыт новый вопрос по форуму: ' . "\n" .

@@ -14,6 +14,7 @@ require __DIR__ . '/vendor/autoload.php';
 use Skype\Chat;
 use Skype\Helper\Timer;
 use Skype\Message;
+use Skype\Stdout;
 
 /**
  * Class DevelClient
@@ -53,6 +54,7 @@ class DevelClient
     {
         $this->commands[] = new Commands\Issues();
 
+        Stdout::write('Initialize skype devel client');
 
         $this->skype  = Skype::client();
         $this->chat   = Chat::getByName(self::CHAT_ID);
@@ -69,15 +71,29 @@ class DevelClient
 
         $this->skype->events->onAnyMessage(function(Message $msg){
 
+            /**
+             * HELP
+             */
             if ($msg->like('help')) {
+                Stdout::write(
+                    'Пользователь ' . $msg->getUser()->handle . ' сделал запрос на help'
+                );
+
                 $result = 'Доступные команды:' . "\n";
                 foreach ($this->commands as $c) {
                     $result .= '   ' . $c->command . ' - ' . $c->about . "\n";
                 }
                 $msg->getUser()->send($result);
+
+            /**
+             * COMMANDS
+             */
             } else {
                 foreach ($this->commands as $c) {
                     if ($msg->like($c->command)) {
+                        Stdout::write(
+                            'Пользователь ' . $msg->getUser()->handle . ' сделал запрос на ' . $c->command
+                        );
                         $c->request($msg->getUser());
                     }
                 }
@@ -92,8 +108,16 @@ class DevelClient
 try {
     new DevelClient();
 } catch(\Exception $e) {
+    /**
+     * EXCEPTION
+     */
     Chat::getByName(DevelClient::CHAT_ID)
         ->send('Devel bot exception: ' . $e->getMessage());
+
+    Stdout::write(
+        'Exception: ' . $e->getMessage() . "\n" .
+        'Trace: ' . "\n" . print_r($e->getTrace(), 1)
+    );
 }
 
 
