@@ -113,9 +113,6 @@ try {
     /**
      * EXCEPTION
      */
-    Chat::getByName(DevelClient::CHAT_ID)
-        ->send('Devel bot exception: ' . $e->getMessage());
-
     Stdout::write(
         'Exception: ' . $e->getMessage() . "\n" .
         'Trace: ' . "\n" . print_r($e->getTrace(), 1)
