@@ -70,7 +70,7 @@ class Issues extends AbstractCommand
                         'Открыт новый вопрос по форуму: ' . "\n" .
                         '  Вопрос: ' . $iss['title'] .      "\n" .
                         '  Описание: ' . $iss['body'] .     "\n" .
-                        '  Адрес: ' . $iss['url'] .         "\n" .
+                        '  Адрес: ' . $iss['html_url'] .    "\n" .
                         '  Автор: ' . $iss['user']['login']
                     );
             }
