@@ -70,7 +70,7 @@ class DevelClient
         $this->skype->events->onAnyMessage(function(Message $msg){
 
             if ($msg->like('help')) {
-                $result = 'Помощь:' . "\n";
+                $result = 'Доступные команды:' . "\n";
                 foreach ($this->commands as $c) {
                     $result .= '   ' . $c->command . ' - ' . $c->about . "\n";
                 }
