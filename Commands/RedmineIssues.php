@@ -60,14 +60,6 @@ class RedmineIssues extends AbstractCommand
             ->api('issue')
             ->all(['limit' => 10])['issues'];
 
-        $ids = [];
-        foreach ($issues as $i) { $ids[] = $i['id']; }
-        Stdout::write('Finded issues: ' . implode(', ', $ids));
-
-        $ids = [];
-        foreach ($this->issues as $i) { $ids[] = $i['id']; }
-        Stdout::write('Isset issues: ' . implode(', ', $ids));
-
         foreach ($issues as $issue) {
             if (!isset($this->issues[$issue['id']])) {
                 Stdout::write('Find new Redmine task: http://redmine.rudev.org/issues/' . $issue['id']);
