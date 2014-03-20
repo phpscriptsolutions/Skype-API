@@ -53,6 +53,7 @@ class DevelClient
     public function __construct()
     {
         $this->commands[] = new Commands\GitHubIssues();
+        $this->commands[] = new Commands\RedmineIssues();
 
         Stdout::write('Initialize skype devel client');
 
