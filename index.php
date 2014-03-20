@@ -113,9 +113,14 @@ try {
     /**
      * EXCEPTION
      */
-    Stdout::write(
+    file_put_contents(
+        __DIR__ . '/logs/' . date('Y-m-d H:i') . '.log',
         'Exception: ' . $e->getMessage() . "\n" .
-        'Trace: ' . "\n" . print_r($e->getTraceAsString(), 1)
+        'Trace: ' . "\n" . $e->getTraceAsString() . "\n\n" .
+        str_repeat('=', 80) . "\n";
+    );
+    Stdout::write(
+        'Exception: ' . $e->getMessage() . "\n"
     );
 }
 
