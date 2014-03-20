@@ -50,7 +50,7 @@ class GitHubIssues extends AbstractCommand
 
         $result = $this->about . ":\n";
         foreach ($issues as $i) {
-            $result .= '   ' . $i['title'] . ' : ' . $i['url'] . "\n";
+            $result .= '   ' . $i['title'] . ' : ' . $i['html_url'] . "\n";
         }
 
         if (Skype::client()->currentUserHandle != $user->handle) {
