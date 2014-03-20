@@ -14,7 +14,6 @@ require __DIR__ . '/vendor/autoload.php';
 use Skype\Chat;
 use Skype\Helper\Timer;
 use Skype\Message;
-use Github\Client as Github;
 
 /**
  * Class DevelClient
@@ -44,41 +43,49 @@ class DevelClient
     protected $chat;
 
     /**
-     * Github instance
-     * @var
+     * Commands
      */
-    protected $github;
+    protected $commands = [];
+
+
+    public function commands()
+    {
+
+    }
 
     public function __construct()
     {
+        $this->commands[] = new Commands\Issues();
+
+
         $this->skype  = Skype::client();
-        #$this->chat   = Chat::getByName(self::CHAT_ID);
+        $this->chat   = Chat::getByName(self::CHAT_ID);
         #$this->chat   = Chat::getByName(self::CHAT_ECHO);
-        #$this->github = new Github();
 
         (new Timer(10))
-            ->callback(function(){ /* $this->checkGithub(); */ })
+            ->callback(function(){})
             ->join($this->skype);
 
-        $this->skype->events->onMessage(function(Message $msg){
-            $msg->getUser()->send('Сам такой!');
-            #if ($msg->like('github:issues')) {
-            #    $m = '';
-            #    foreach ($this->issues() as $issue) {
-            #        $m .= 'New issue: "' . $issue['title'] . '" ' . $issue['url'] . "\n\n";
-            #    }
-            #    $msg->getUser()->send($m);
-            #}
+
+        $this->skype->events->onAnyMessage(function(Message $msg){
+
+            if ($msg->like('help')) {
+                $result = 'Помощь:' . "\n";
+                foreach ($this->commands as $c) {
+                    $result .= '   ' . $c->command . ' - ' . $c->about . "\n";
+                }
+                $msg->getUser()->send($result);
+            } else {
+                foreach ($this->commands as $c) {
+                    if ($msg->like($c->command)) {
+                        $c->request($msg->getUser());
+                    }
+                }
+            }
         });
 
-        $this->skype->join();
-    }
 
-    public function issues()
-    {
-        return $this->github
-            ->api('issue')
-            ->all('codersclub', 'forum');
+        $this->skype->join();
     }
 }
 new DevelClient();

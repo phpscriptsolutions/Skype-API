@@ -4,6 +4,9 @@
         "knplabs/github-api": "dev-master"
     },
     "autoload": {
+        "classmap": [
+            "Commands"
+        ],
         "psr-0": {
             "Skype": "lib/src"
         }
